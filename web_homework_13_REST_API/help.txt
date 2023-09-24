@@ -1,0 +1,53 @@
+docker pull redis
+
+docker run --name some-redis -d -p 6379:6379 redis
+docker run --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_DB=contacts -p 5432:5432 -d postgres
+
+python -m venv myenv
+myenv\Scripts\activate
+http://127.0.0.1:8000/docs
+uvicorn main:app --reload
+
+{
+  "first_name": "Yurii",
+  "last_name": "Sergienko",
+  "email": "yurasergienko97@gmail.com",
+  "phone_number": "0730591997",
+  "birth_date": "1997-05-09",
+  "additional_info": "test"
+}
+
+{
+  "first_name": "Max",
+  "last_name": "Maximum",
+  "email": "mmaximum@gmail.com",
+  "phone_number": "0741491457",
+  "birth_date": "1997-09-11",
+  "additional_info": "test"
+}
+
+{
+  "first_name": "Den",
+  "last_name": "Denisimo",
+  "email": "denisimo@gmail.com",
+  "phone_number": "0348543547",
+  "birth_date": "1997-09-20",
+  "additional_info": "test"
+}
+
+CREATE TABLE contacts (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    birth_date DATE,
+    additional_info TEXT
+);
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    hashed_password VARCHAR(255) NOT NULL
+);
+
