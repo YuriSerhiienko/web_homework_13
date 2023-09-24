@@ -1,0 +1,53 @@
+{% extends "app_hm10/base.html" %}
+
+{% block content %}
+    <h2 class="my-4">Tag Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Tag: {{ tag.name }}</h5>
+            <p class="card-text">{{ tag.description }}</p>
+        </div>
+    </div>
+
+    <h3 class="my-4">Quotes with the tag "{{ tag.name }}"</h3>
+    <div class="row">
+        {% for quote in page_quotes %}
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{{ quote.text }}</p>
+                            <footer class="blockquote-footer">
+                                <a href="{% url 'app_hm10:author_detail' author_id=quote.author.id %}">
+                                    {{ quote.author.fullname }}
+                                </a>
+                            </footer>
+                        </blockquote>
+                        <ul class="list-inline mt-2">
+                            {% for tag in quote.tags.all %}
+                                <li class="list-inline-item badge bg-secondary">{{ tag.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination justify-content-center my-3">
+        {% if page_quotes.has_previous %}
+            <a href="?page=1" class="btn btn-light">&laquo; First</a>
+            <a href="?page={{ page_quotes.previous_page_number }}" class="btn btn-light">Previous</a>
+        {% endif %}
+
+        <span class="current-page mx-3">
+            Page {{ page_quotes.number }} of {{ page_quotes.paginator.num_pages }}.
+        </span>
+
+        {% if page_quotes.has_next %}
+            <a href="?page={{ page_quotes.next_page_number }}" class="btn btn-light">Next</a>
+            <a href="?page={{ page_quotes.paginator.num_pages }}" class="btn btn-light">Last &raquo;</a>
+        {% endif %}
+    </div>
+{% endblock %}
